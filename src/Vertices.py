@@ -2,7 +2,7 @@ import random
 import time
 
 
-class Node:
+class Vertices:
 
     def __init__(self, pos, id):
         self.pos = pos
