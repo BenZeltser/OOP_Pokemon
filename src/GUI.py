@@ -66,6 +66,7 @@ for n in graph.Nodes:
     n.pos = SimpleNamespace(x=float(x), y=float(y))  #####
 
 # get data proportions
+#Small snippet - can stay at the View despite being Model related
 min_x = min(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 min_y = min(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
 max_x = max(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
@@ -147,11 +148,12 @@ while client.is_running() == 'true':
         a.pos = SimpleNamespace(x=my_scale(
             float(x), x=True), y=my_scale(float(y), y=True))
     # check events
+    '''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
-    '''
+
 
     # Model Instance
     model = Model(client)
@@ -268,14 +270,8 @@ while client.is_running() == 'true':
     pos = pygame.mouse.get_pos()
     if stopButton.rect.collidepoint(pos):
         if pygame.mouse.get_pressed()[0] == 1:
-            try:
-                client.stop_connection()
-                raise Exception("STOPPED")
-            except Exception as err:
-                print("STOPPED")
-            finally:
-                print("STOPPED")
-
+            client.stop_connection()
+            #client.stop() //UPLOAD
     # draw nodes
     for n in graph.Nodes:
         x = my_scale(n.pos.x, x=True)
