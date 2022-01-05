@@ -11,6 +11,8 @@ import pygame
 from pygame import *
 
 # init pygame
+from src import Button
+
 WIDTH, HEIGHT = 1080, 720
 
 # default port
@@ -31,7 +33,7 @@ client.start_connection(HOST, PORT)
 pokemons = client.get_pokemons()  # get Pokemon Json
 pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d))
 # convert to a json and then print the pokemons
-print("Pokemon!" + pokemons)
+#print("Pokemon!" + pokemons)
 
 graph_json = client.get_graph()  # Per Scenario
 
@@ -191,20 +193,41 @@ while client.is_running() == 'true':
     rect = pygame.Rect(890, 65, 40, 40)
     screen.blit(jjmaxLevel, rect)
 
+
+
     # Print each value
 
-    print("Iterate\n\n\n")
-    print("Pokemon: " + str(jpokemon))
-    print("is_logged_in: " + str(jis_logged_in))
-    print("moves: " + str(jmoves))
-    print("grade: " + str(jgrade))
-    print("game_level: " + str(jgame_level))
-    print("max_user_level: " + str(jmax_user_level))
-    print("id: " + str(jid))
-    print("graph: " + str(jgraph))
-    print("agents: " + str(jagents))
+    #print("Iterate\n\n\n")
+    #print("Pokemon: " + str(jpokemon))
+    # print("is_logged_in: " + str(jis_logged_in))
+    # print("moves: " + str(jmoves))
+    # print("grade: " + str(jgrade))
+    # print("game_level: " + str(jgame_level))
+    # print("max_user_level: " + str(jmax_user_level))
+    # print("id: " + str(jid))
+    # print("graph: " + str(jgraph))
+    # print("agents: " + str(jagents))
 
     ''''''''''''''
+
+    #Draw STOP Button
+
+    stopImg = pygame.image.load('STOP.png').convert_alpha()
+    stopButton = Button.Button(800,550,stopImg,0.25)
+    drawn = stopButton.draw(screen)
+
+    pos = pygame.mouse.get_pos()
+
+    # check mouseover and clicked conditions
+    if stopButton.rect.collidepoint(pos):
+        if pygame.mouse.get_pressed()[0] == 1:
+            try:
+                client.stop_connection()
+                raise Exception("STOPPED")
+            except Exception as err:
+                print("STOPPED")
+            finally:
+                print("STOPPED")
 
     # draw nodes
     for n in graph.Nodes:
@@ -268,7 +291,7 @@ while client.is_running() == 'true':
             ttl = client.time_to_end()
 
             # print(ttl, client.get_info())
-            print(ttl)
+            #print(ttl)
 
     client.move()
 
