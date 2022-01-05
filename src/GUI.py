@@ -33,7 +33,7 @@ client.start_connection(HOST, PORT)
 pokemons = client.get_pokemons()  # get Pokemon Json
 pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d))
 # convert to a json and then print the pokemons
-#print("Pokemon!" + pokemons)
+# print("Pokemon!" + pokemons)
 
 graph_json = client.get_graph()  # Per Scenario
 
@@ -193,12 +193,10 @@ while client.is_running() == 'true':
     rect = pygame.Rect(890, 65, 40, 40)
     screen.blit(jjmaxLevel, rect)
 
-
-
     # Print each value
 
-    #print("Iterate\n\n\n")
-    #print("Pokemon: " + str(jpokemon))
+    # print("Iterate\n\n\n")
+    # print("Pokemon: " + str(jpokemon))
     # print("is_logged_in: " + str(jis_logged_in))
     # print("moves: " + str(jmoves))
     # print("grade: " + str(jgrade))
@@ -210,15 +208,15 @@ while client.is_running() == 'true':
 
     ''''''''''''''
 
-    #Draw STOP Button
+    # Draw STOP Button
 
     stopImg = pygame.image.load('STOP.png').convert_alpha()
-    stopButton = Button.Button(800,550,stopImg,0.25)
+    stopButton = Button.Button(800, 550, stopImg, 0.25)
     drawn = stopButton.draw(screen)
 
-    pos = pygame.mouse.get_pos()
+    # Set Action for Button (DEPENDENT)
 
-    # check mouseover and clicked conditions
+    pos = pygame.mouse.get_pos()
     if stopButton.rect.collidepoint(pos):
         if pygame.mouse.get_pressed()[0] == 1:
             try:
@@ -291,7 +289,7 @@ while client.is_running() == 'true':
             ttl = client.time_to_end()
 
             # print(ttl, client.get_info())
-            #print(ttl)
+            # print(ttl)
 
     client.move()
 
