@@ -43,7 +43,7 @@ screen = display.set_mode((WIDTH, HEIGHT), depth=32, flags=RESIZABLE)
 clock = pygame.time.Clock()
 pygame.font.init()
 
-# Create client API
+# Begin Connection to init GUI
 client = Client()  ####
 client.start_connection(HOST, PORT)  ####
 '''Not gui'''
@@ -206,7 +206,7 @@ while client.is_running() == 'true':
     agents_message = jagents
 
     ttl = client.time_to_end()
-    print(ttl)
+    #print(ttl)
 
     # Display text
     pokemon = FONT.render("Pokemons: " + str(pokemon_message), True, (34, 139, 34))
@@ -342,7 +342,7 @@ while client.is_running() == 'true':
                 '{"agent_id":' + str(agent.id) + ', "next_node_id":' + str(next_node) + '}')
             ttl = client.time_to_end()
 
-            print(ttl, client.get_info())
+            #print(ttl, client.get_info())
 
     client.move()
 
