@@ -1,11 +1,9 @@
 import time
 import GraphInterface
 import json
-from matplotlib import pyplot as plt
 
 from src.Edge import Edge
 
-start = time.time()
 
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
@@ -19,7 +17,6 @@ class GraphAlgo(GraphAlgoInterface):
     def __init__(self, myGraph: DiGraph = DiGraph()):
         '''New Graph'''
         self.myGraph = myGraph
-        print(start-time.time())
 
     '''Get'''
 
@@ -69,61 +66,5 @@ class GraphAlgo(GraphAlgoInterface):
                 return True
         except:
             raise NotImplementedError
-
-
-    '''Save'''
-
-    def save_to_json(self, file_name: str) -> bool:
-
-        try:
-            start = time.time()
-            '''Create Dict parameters (dynamic ds)'''
-            jdict = {'Edges': [], 'Nodes': []}
-
-            '''Open (create) Json file as write'''
-            with open(file_name, 'w') as f:
-
-                '''Iterate in a nested loop. \n
-                   Append edges.'''
-
-                for i in self.get_graph().get_all_v().keys():
-                    for j,k in self.get_graph().all_in_edges_of_node(i).items():
-                        jdict['Edges'].append(
-                            {'src': i, 'dest': j, 'w': k})
-
-
-                '''append nodes'''
-
-                for i in self.get_graph().get_all_v().values():
-                    jdict['Nodes'].append(
-                        {'id':i.key}
-                    )
-
-                '''Apply the data to the file'''
-                size = len(jdict)
-                out = json.dumps(jdict, allow_nan=True, indent=size)
-                f.write(out)
-
-                '''-> Condit'''
-                print("save:")
-                print(start - time.time())
-                return True
-
-        except:
-            raise NotImplementedError
-
-    '''Plot Graph'''
-
-    def plot_graph(self) -> None:
-        X = []
-        Y = []
-        all_nodes = self.myGraph.get_all_v()
-        for x in range(len(self.myGraph.get_all_v())):
-            node = all_nodes[x]
-            X.append(node.getX())
-            Y.append(node.getY())
-        plt.plot(X, Y)
-        plt.plot(X, Y, 'ro')
-        plt.show()
 
 
