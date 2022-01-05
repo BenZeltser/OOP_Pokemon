@@ -4,7 +4,6 @@ OOP - Ex4
 Very simple GUI example for python client to communicates with the server and "play the game!"
 """
 
-
 '''
 
 Within the MVC Design pattern, this class represents the 'View' Section.
@@ -38,7 +37,6 @@ HOST = '127.0.0.1'
 #### PARTIALLY NOT VIEW RELATED BUT CLEARLY INSTRUCTED NOT TO TOUCH ^
 pygame.init()
 
-
 screen = display.set_mode((WIDTH, HEIGHT), depth=32, flags=RESIZABLE)
 clock = pygame.time.Clock()
 pygame.font.init()
@@ -46,32 +44,28 @@ pygame.font.init()
 # Begin Connection to init GUI
 client = Client()  ####
 client.start_connection(HOST, PORT)  ####
-'''Not gui'''
+'''Get elements from program to present them to the UI'''
 pokemons = client.get_pokemons()  # get Pokemon Json ####
 pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d))  ####
-
-
 graph_json = client.get_graph()  # Per Scenario
-
+graph = json.loads(graph_json, object_hook=lambda json_dict: SimpleNamespace(**json_dict))  #####
 FONT = pygame.font.SysFont('Segoe UI Black', 20, bold=False)
 # load the json string into SimpleNamespace Object
-
-# Load the Graph
-graph = json.loads(
-    graph_json, object_hook=lambda json_dict: SimpleNamespace(**json_dict))  #####
 
 # Split pos (x,y)
 for n in graph.Nodes:
     x, y, _ = n.pos.split(',')
-    n.pos = SimpleNamespace(x=float(x), y=float(y))  #####
+    n.pos = SimpleNamespace(x=float(x), y=float(y))
 
 # get data proportions
-#Small snippet - can stay at the View despite being Model related
+# Small snippet - can stay at the View despite being Model related
 min_x = min(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 min_y = min(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
 max_x = max(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 max_y = max(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
 
+
+# Scale with
 
 def scale(data, min_screen, max_screen, min_data, max_data):
     """
@@ -80,6 +74,8 @@ def scale(data, min_screen, max_screen, min_data, max_data):
     """
     return ((data - min_data) / (max_data - min_data)) * (max_screen - min_screen) + min_screen
 
+
+# Scale - UI related
 
 def scalePokemon(pokemons):
     for p in pokemons:
@@ -94,6 +90,7 @@ def scaleAgents(agents):
         agent.pos = SimpleNamespace(x=my_scale(
             float(x), x=True), y=my_scale(float(y), y=True))
 
+
 # decorate scale with the correct values
 
 def my_scale(data, x=False, y=False):
@@ -107,12 +104,13 @@ radius = 30
 
 ##Some cases have more than 1 agent - only high ones (11+)
 
+# Add agent
 client.add_agent("{\"id\":0}")
 # client.add_agent("{\"id\":1}")
 # client.add_agent("{\"id\":2}")
 # client.add_agent("{\"id\":3}")
 
-# this commnad starts the server - the game is running now
+# this command starts the server - the game is running now
 client.start()  ####
 client.log_in("313327579")  ###
 p = client.get_pokemons()  ###
@@ -125,42 +123,18 @@ The GUI and the "algo" are mixed - refactoring using MVC design pattern is requi
 ###**********GUI BEGINS**********
 
 while client.is_running() == 'true':
-    # Refresh = movement
-    # Load the pokemons - need to load everytime to get realtime-pos
-
-    '''
-    pokemons = json.loads(client.get_pokemons(),
-                          object_hook=lambda d: SimpleNamespace(**d)).Pokemons
-    pokemons = [p.Pokemon for p in pokemons]
-    for p in pokemons:
-        x, y, _ = p.pos.split(',')
-        p.pos = SimpleNamespace(x=my_scale(
-            float(x), x=True), y=my_scale(float(y), y=True))
-
-        # Load the Agents - need to load everytime to get realtime-pos
-    agents = json.loads(client.get_agents(),
-                        object_hook=lambda d: SimpleNamespace(**d)).Agents
-    agents = [agent.Agent for agent in agents]
-
-
-    for a in agents:
-        x, y, _ = a.pos.split(',')
-        a.pos = SimpleNamespace(x=my_scale(
-            float(x), x=True), y=my_scale(float(y), y=True))
-    # check events
-    '''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
 
-
     # Model Instance
     model = Model(client)
+
     pokemons = model.loadPokemons()
     agents = model.loadAgents()
 
-    #scale pokemons, agents
+    # scale pokemons, agents
 
     scalePokemon(pokemons)
     scaleAgents(agents)
@@ -170,78 +144,56 @@ while client.is_running() == 'true':
     bg = pygame.image.load("forest.jpg")
     screen.blit(bg, (0, 0))
 
-    ''''''''''''''
-
     '''
     Show the elements at the GUI
     '''
+    #
+    # getinfo = client.get_info()
+    # info = json.loads(getinfo)
+    # getinfo = client.get_info()
+    # info = json.loads(getinfo)
+    # # info is dict
+    #
+    # # GET Info from the dict
+    #
+    # jpokemon = info['GameServer']['pokemons']
+    # jis_logged_in = info['GameServer']['is_logged_in']
+    # jmoves = info['GameServer']['moves']
+    # jgrade = info['GameServer']['grade']
+    # jgame_level = info['GameServer']['game_level']
+    # jmax_user_level = info['GameServer']['max_user_level']
+    # jid = info['GameServer']['id']
+    # jgraph = info['GameServer']['graph']
+    # jgraph = jgraph[5:]
+    # jagents = info['GameServer']['agents']
+    #
+    # # Set each info in variable
+    # # Info to the screen. Present to the screen. show the info
+    # pokemon_message = jpokemon
+    # is_logged_in_message = jis_logged_in
+    # moves_message = jmoves
+    # grade_message = jgrade
+    # game_level_message = jgame_level
+    # max_user_level_message = jmax_user_level
+    # id_message = jid
+    # graph_message = jgraph
+    # agents_message = jagents
 
-    getinfo = client.get_info()
-    info = json.loads(getinfo)
-    getinfo = client.get_info()
-    info = json.loads(getinfo)
-    # info is dict
-
-    # GET Info from the dict
-
-    jpokemon = info['GameServer']['pokemons']
-    jis_logged_in = info['GameServer']['is_logged_in']
-    jmoves = info['GameServer']['moves']
-    jgrade = info['GameServer']['grade']
-    jgame_level = info['GameServer']['game_level']
-    jmax_user_level = info['GameServer']['max_user_level']
-    jid = info['GameServer']['id']
-    jgraph = info['GameServer']['graph']
-    jgraph = jgraph[5:]
-    jagents = info['GameServer']['agents']
-
-    # Set each info in variable
-    # Info to the screen. Present to the screen. show the info
-    pokemon_message = jpokemon
-    is_logged_in_message = jis_logged_in
-    moves_message = jmoves
-    grade_message = jgrade
-    game_level_message = jgame_level
-    max_user_level_message = jmax_user_level
-    id_message = jid
-    graph_message = jgraph
-    agents_message = jagents
+    Messages = Model.getInfo(client)
+    MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID: ', 'Agents: ',
+                       'Graph: ']
 
     ttl = client.time_to_end()
-    #print(ttl)
+    # print(ttl)
 
-    # Display text
-    pokemon = FONT.render("Pokemons: " + str(pokemon_message), True, (34, 139, 34))
-    rect = pygame.Rect(700, 5, 40, 40)
-    screen.blit(pokemon, rect)
-
-    jjttl = FONT.render("TTL(ms): " + str(ttl), True, (34, 139, 34))
-    rect = pygame.Rect(700, 25, 40, 40)
-    screen.blit(jjttl, rect)
-
-    displayGraph = FONT.render("Graph: " + str(graph_message), True, (34, 139, 34))
-    rect = pygame.Rect(700, 45, 40, 40)
-    screen.blit(displayGraph, rect)
-
-    level = FONT.render("Level: " + str(game_level_message), True, (34, 139, 34))
-    rect = pygame.Rect(700, 65, 40, 40)
-    screen.blit(level, rect)
-
-    grade = FONT.render("Grade: " + str(grade_message), True, (34, 139, 34))
-    rect = pygame.Rect(890, 5, 40, 40)
-    screen.blit(grade, rect)
-
-    moves = FONT.render("moves: " + str(moves_message), True, (34, 139, 34))
-    rect = pygame.Rect(890, 25, 40, 40)
-    screen.blit(moves, rect)
-
-    jjagents = FONT.render("agents: " + str(agents_message), True, (34, 139, 34))
-    rect = pygame.Rect(890, 45, 40, 40)
-    screen.blit(jjagents, rect)
-
-    jjmaxLevel = FONT.render("Max level: " + str(max_user_level_message), True, (34, 139, 34))
-    rect = pygame.Rect(890, 65, 40, 40)
-    screen.blit(jjmaxLevel, rect)
+    for i in range(0, 4):
+        SMessage = FONT.render(str(MessagesHeaders[i]) + ": " + str(Messages[i]), True, (34, 139, 34))
+        rect = pygame.Rect(700, 5 + (i * 25), 40, 40)
+        screen.blit(SMessage, rect)
+    for i in range(5, 8):  # Shit X-Axis
+        SMessage = FONT.render(str(MessagesHeaders[i]) + ": " + str(Messages[i]), True, (34, 139, 34))
+        rect = pygame.Rect(880, (i - 4) * 25, 40, 40)
+        screen.blit(SMessage, rect)
 
     # Print each value
 
@@ -256,8 +208,6 @@ while client.is_running() == 'true':
     # print("graph: " + str(jgraph))
     # print("agents: " + str(jagents))
 
-    ''''''''''''''
-
     # Draw STOP Button
 
     stopImg = pygame.image.load('STOP.png').convert_alpha()
@@ -271,7 +221,7 @@ while client.is_running() == 'true':
     if stopButton.rect.collidepoint(pos):
         if pygame.mouse.get_pressed()[0] == 1:
             client.stop_connection()
-            #client.stop() //UPLOAD
+            # client.stop() //UPLOAD
     # draw nodes
     for n in graph.Nodes:
         x = my_scale(n.pos.x, x=True)
@@ -338,7 +288,7 @@ while client.is_running() == 'true':
                 '{"agent_id":' + str(agent.id) + ', "next_node_id":' + str(next_node) + '}')
             ttl = client.time_to_end()
 
-            #print(ttl, client.get_info())
+            # print(ttl, client.get_info())
 
     client.move()
 
