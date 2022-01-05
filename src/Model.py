@@ -1,6 +1,10 @@
 import json
 from types import SimpleNamespace
 
+import pygame
+
+from src.Button import Button
+
 
 class Model:
 
@@ -61,3 +65,12 @@ class Model:
         ans.append(graph_message)
 
         return ans
+
+    def stopGUI(client, upload: bool, stopButton):
+        pos = pygame.mouse.get_pos()
+        if stopButton.rect.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] == 1:
+                if not upload:
+                    client.stop_connection()
+                else:
+                    client.stop()

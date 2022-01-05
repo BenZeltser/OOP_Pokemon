@@ -214,20 +214,17 @@ while client.is_running() == 'true':
     stopButton = Button.Button(800, 550, stopImg, 0.25)
     drawn = stopButton.draw(screen)
 
-    # Set Action for Button (DEPENDENT)
-    # Set Action for Button (DEPENDENT)
+    Model.stopGUI(client, False, stopButton)
 
-    pos = pygame.mouse.get_pos()
-    if stopButton.rect.collidepoint(pos):
-        if pygame.mouse.get_pressed()[0] == 1:
-            client.stop_connection()
-            # client.stop() //UPLOAD
+    # if button is clicked - stop the program
+    # also, to send the results set mid param to True
+
     # draw nodes
     for n in graph.Nodes:
         x = my_scale(n.pos.x, x=True)
         y = my_scale(n.pos.y, y=True)
 
-        # its just to get a nice antialiased circle
+        # its just to get a nice antialiasing circle
         gfxdraw.filled_circle(screen, int(x), int(y),
                               radius, Color(64, 80, 174))
         gfxdraw.aacircle(screen, int(x), int(y),
