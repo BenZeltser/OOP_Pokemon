@@ -4,20 +4,79 @@ import time
 
 class Vertices:
 
-    def __init__(self, pos, id):
-        self.pos = pos
-        self.id = id
-        variables = pos.split(',')
-        self.x = variables[0]
-        self.y = variables[1]
-        self.z = variables[2]
+    id=0
+    count=0
+    w=0.0
+    i=""
+    t=0
+    p=None
+    v="false"
+    S_t=0.0
+    c=""
+    t=0
+    dub
+    position=()
 
-    def __str__(self):
-        return ('ID: ' + str(self.id) + '\n' + 'pos' + str(self.x) + ',' + str(self.y))
+#this is the constructor of a vertices
+    def __init__(self):
+        self.id=self.count
+        Vertices.count+=1
+#print the vertice
+    def __repr__(self):
+        return str(self.id)+" "+ str(self.position)
 
-    def getX(self):
-        return self.x
 
-    def getY(self):
-        return self.y
+#set the id of the vertice
 
+    def set_id(self, key:int):
+        self.id = key
+
+#copies a vertice
+    def copy_vertices(self,v):
+        self.id=v.get_id()
+        self.w=v.get_weight()
+        self.i=v.get_info()
+        self.t=v.get_tag()
+
+#returns the id of a vertice
+    def get_id(self):
+        return self.id
+
+#returns the weight of a vertice
+    def get_weight(self):
+        return self.w
+
+#set the weight of a vertice
+    def set_weight(self,w:float):
+        self.w=w
+
+#get the info of a vertice
+    def get_info(self):
+        return self.i
+#set the info of a vertice
+    def set_info(self,i):
+        self.i=i
+
+#get the tag of a vertice
+    def get_tag(self):
+        return self.t
+
+#set the that of a vertice
+    def set_tag(self,t:float):
+        self.t=t
+
+#get the second tag of a vertice
+    def get_s_t(self):
+        return self.s_t
+
+#set the second tag of a vertice
+    def set_s_t(self,t):
+        self.s_t=t
+
+#set the value of dub for the vertice
+    def set_dub(self,e):
+        self.dub=e
+
+#set the counter of the vertice
+    def set_counter(self,counter):
+        self.count=counter

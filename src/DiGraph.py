@@ -46,7 +46,7 @@ class DiGraph(GraphInterface):
         return self.modCounter
 
 #this functions add an edge to the graph if the edge does not exist
-    def get_edges(self, id1: int, id2: int, weight: float) -> bool:
+    def add_edges(self, id1: int, id2: int, weight: float) -> bool:
         if id1 not in self.vertices.keys() or id2 not in self.vertices.keys() and weight<=0:
             return False
         if id1 in self.edges.keys():
@@ -68,3 +68,11 @@ class DiGraph(GraphInterface):
             self.modCounter+=1
             return True
 
+#this functions adds a vertice if it is not in the graph
+    def add_node(self, node_id: int, pos: tuple = None) -> bool:
+        if node_id in self.vertices.keys():
+            return False
+        for i in self.vertices.keys():
+            if self.vertices.get(i).pos == pos:
+                return False
+        v = Vertices()
