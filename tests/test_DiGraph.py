@@ -1,22 +1,34 @@
 from unittest import TestCase
 
-from diGraph import DiGraph
-
+from src import DiGraph
 
 class TestDiGraph(TestCase):
 
 
-    def preTest(self):
-        myGraph = DiGraph()
+    def testPre(self):
+        myGraph = DiGraph.DiGraph()
         print("Test0")
+        myGraph.add_node(0)
+        myGraph.add_node(1)
+        myGraph.add_node(2)
+        myGraph.add_node(3)
+        myGraph.add_node(4)
+        myGraph.add_node(5)
+
+        myGraph.add_edge(0,1,1)
+        myGraph.add_edge(2, 1, 3)
+
+
     def test_v_size(self):
-        myGraph = DiGraph()
+        myGraph = DiGraph.DiGraph()
         n = myGraph.v_size()
         self.assertEqual(n, 0, "Empty Graph")
-        print("Test1")
 
     def test_e_size(self):
-        self.fail()
+        myGraph = DiGraph()
+        e = myGraph.e_size()
+        self.assertEqual(e, 0, "Empty Graph")
+        print("Test2")
 
     def test_get_all_v(self):
         self.fail()
