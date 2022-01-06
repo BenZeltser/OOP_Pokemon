@@ -39,9 +39,6 @@ class TestDiGraph(TestCase):
     def test_all_in_edges_of_node(self):
         self.fail()
 
-    def test_get_mc(self):
-        self.fail()
-
     def test_add_edges(self):
         self.fail()
 
