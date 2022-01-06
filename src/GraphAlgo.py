@@ -130,3 +130,81 @@ class GraphAlgo(GraphAlgoInterface):
             vertices_keys.append(v.id)
         distance = self.shortest_path_distance(id1, id2)
         return distance, vertices_keys
+
+    '''Idea inspired by PHD William Fiset.
+       Use the reverse Graph 
+       To find the Strongly Connected Component of a given node
+       
+       see:
+       
+       SCC: 
+       https://en.wikipedia.org/wiki/Strongly_connected_component
+       
+       Clique: 
+       https://en.wikipedia.org/wiki/Clique_(graph_theory)
+       
+       '''
+
+    def DoubleBFS(self, myGraph, id1: int, has_family: dict) -> list:
+
+        '''
+
+        :param myGraph:
+        :param id1:
+        :param has_family:
+        :return:
+
+        'Deques are a generalization of stacks and queues (the name is pronounced “deck” and is short for
+        “double-ended queue”). Deques support thread-safe, memory efficient appends and pops from either side of the
+        deque with approximately the same O(1) performance in either direction.
+
+        https://docs.python.org/3/library/collections.html
+
+        TL;DR - a 'mutant' of Stack and Queue combined
+
+        '''
+        v_list = myGraph.get_all_v()
+        q = deque()
+        Clique: list
+        Clique = []
+        u = v_list.get(id1)
+
+        # Marked A - Marked as visited on BFS on REGULAR GRAPH
+        # Marked B - Marked as visited on BFS on REVERSED GRAPH
+
+        markedA = {}
+        markedB = {}
+
+        q.append(u)
+        Clique.append(u.key)
+        has_family[u.key] = True
+
+        markedA[u] = True
+        while q:
+            # first BFS - regular Graph
+            u = q.popleft()
+            if u.key in myGraph._edges.keys():
+                for key in myGraph.all_out_edges_of_node(u.key).keys():
+                    v = myGraph.get_all_v().get(key)
+                    # if not visited yet
+                    if v not in markedA:
+                        markedA[v] = True
+                        q.append(v)
+        q.append(myGraph.get_all_v().get(id1))
+
+        while q:
+            # Second BFS - REVERSED Graph
+            u = q.popleft()
+            if myGraph.all_in_edges_of_node(u.key) is not None:
+                for key in myGraph.all_in_edges_of_node(u.key).keys():
+                    v = myGraph.get_all_v().get(key)
+                    if v not in markedB:
+                        markedB[v] = True
+                        q.append(v)
+                        if v in markedA.keys() and key not in has_family.keys():
+                            Clique.append(key)
+                            has_family[key] = True
+        ans = dict.fromkeys(Clique)
+        ans = list(ans)
+        ans = sorted((ans))
+        return ans  # as sorted list
