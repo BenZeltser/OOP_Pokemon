@@ -55,7 +55,7 @@ class Model:
 
         ans = []
         ans.append(pokemon_message)
-        ans.append(is_logged_in_message)
+        ans.append('')
         ans.append(moves_message)
         ans.append(grade_message)
         ans.append(game_level_message)

@@ -195,6 +195,10 @@ while client.is_running() == 'true':
         rect = pygame.Rect(880, (i - 4) * 25, 40, 40)
         screen.blit(SMessage, rect)
 
+    SMessage = FONT.render("Time to end: " + str(client.time_to_end()), True, (34, 139, 34))
+    rect = pygame.Rect(880, 5 , 40, 40)
+    screen.blit(SMessage, rect)
+
     # Print each value
 
     # print("Iterate\n\n\n")
@@ -263,12 +267,25 @@ while client.is_running() == 'true':
     # draw pokemons (note: should differ (GUI wise) between the up and the down pokemons (currently they are marked in the same way).
 
     sqruitle = pygame.image.load("squirtle.jpg")
+    upArrow = pygame.image.load("UP.png")
+    downArrow = pygame.image.load("DOWN.png")
+
 
     for p in pokemons:
         screen.blit(sqruitle, (int(p.pos.x), int(p.pos.y)))
         rect = pygame.Rect(int(p.pos.x) - 25, int(p.pos.y) - 25, 40, 40)
         jjj = FONT.render("Value: " + str(p.value), True, (0, 0, 255))
         screen.blit(jjj, rect)
+        if (p.type > 0):
+            #UP
+            screen.blit(upArrow, ((int(p.pos.x)-22), (int(p.pos.y))+10))
+        else:
+            #Down
+            screen.blit(downArrow, ((int(p.pos.x)-22), (int(p.pos.y))+10))
+
+        #Up or Down:
+
+        print(p.type)
     # update screen changes
     display.update()
 
