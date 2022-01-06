@@ -123,3 +123,17 @@ class DiGraph(GraphInterface):
         del(self.vertices[node_id])
         self.modCounter+=1
         return True
+
+    #this function makes our grapgh into dictionary so we could save it as a json
+    def to_dictionary(self)-> dict:
+        result = {}
+        edge_list=[]
+        vertices_list=[]
+
+        for s in self.edges.keys():
+            for d in self.edges.get(s).keys():
+                edge_list.append({"src":s,"w":self.edges.get(s).get(d),"dest":d})
+        result["Edges"]=edge_list
+        for i in self.vertices.keys():
+            vertices_list.append({"pos":str(self.vertices.get(i).pos[0])+","+str(self.vertices.get(i).pos[1])+","+str(0),"id":i})
+        result["Nodes"]=vertices_list

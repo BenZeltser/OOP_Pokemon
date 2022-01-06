@@ -12,59 +12,62 @@ from src.DiGraph import DiGraph
 
 class GraphAlgo(GraphAlgoInterface):
 
+    myGraph=DiGraph()
+    TL_Sort=[]
+    SSC=[]
     '''Constructor'''
 
-    def __init__(self, myGraph: DiGraph = DiGraph()):
+    def __init__(self,Digraph=myGraph):
         '''New Graph'''
-        self.myGraph = myGraph
+        self.myGraph = DiGraph()
+        self.myGraph= Digraph
+        self.TL_Sort=[]
+        self.SSC=[]
 
     '''Get'''
 
     def get_graph(self) -> GraphInterface:
-        start = time.time()
         return self.myGraph
-        print(get)
-        print(start - time.time())
+
 
     '''Load'''
 
     def load_from_json(self, file_name: str) -> bool:
         try:
-            start = time.time()
             '''Open file as read'''
             with open(file_name, 'r') as f:
-                print("Loaded")
                 load = json.load(f)
                 '''Init graph instance'''
-                myGraph= DiGraph()
-
+                self.__init__()
+                self.myGraph=DiGraph()
                 '''Iterate through nodes'''
-                Nodes = load['Nodes']
-                for node in Nodes:
-                    print("***added Node***\n")
-                    print("pos: " + str(node["pos"]))
-                    print("id: " + str(node["id"]))
-                    print("\n")
-                    if "pos" not in node:
-                        myGraph.add_node(node["id"])
-
-                '''Iterate through edges'''
-                for edge in load['Edges']:
-                    current = Edge(edge["src"],edge["dest"],edge["w"])
-                    src = current.getSRC()
-                    w = current.getWeight()
-                    dest = current.getDest()
-                    myGraph.connect(src,dest,w)
-                    print("***added Edge***\n")
-                    print("Src: "+str(src))
-                    print("Weight: " + str(w))
-                    print("Dest: " + str(dest))
-                    print("\n")
-                '''Attribute the graph'''
-                self.myGraph = myGraph
-                f.close()
+                for i in load.get("Nodes"):
+                    self.myGraph.add_node(i.get("id"), i.get("pos"))
+                for i in load.get("Edges"):
+                    self.myGraph.add_edge(i.get("src"), i.get("dest"),i.get("w"))
                 return True
-        except:
-            raise NotImplementedError
+        except Exception as e:
+            return False
+
+    '''Save'''
+    def save_to_json(self, file_name:str)-> bool:
+        try:
+            with open(file_name,"w") as f:
+                json.dump(self.myGraph.to_dictionary(),indent=4,fp=f)
+            return True
+        except Exception as e:
+            return False
+
+    def shortest_path(self, id1: int, id2: int) -> (float, list):
+        v_List=self.shortest_path_list(id1,id2)
+        vertices_keys=[]
+        for v in v_List:
+            vertices_keys.append(v.id)
+        distance=self.shortest_path_distance(id1,id2)
+        return distance,vertices_keys
+
+
+
+
 
 
