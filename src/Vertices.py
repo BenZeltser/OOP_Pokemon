@@ -14,7 +14,7 @@ class Vertices:
     S_t=0.0
     c=""
     t=0
-    dub
+    dub=0
     position=()
 
 #this is the constructor of a vertices

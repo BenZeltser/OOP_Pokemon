@@ -29,35 +29,29 @@ from src.Model import Model
 
 WIDTH, HEIGHT = 1080, 720
 
-# default port
 PORT = 6666
-# server host (default localhost 127.0.0.1)
 HOST = '127.0.0.1'
 
-#### PARTIALLY NOT VIEW RELATED BUT CLEARLY INSTRUCTED NOT TO TOUCH ^
+#### PARTIALLY NOT GUI RELATED BUT CLEARLY INSTRUCTED NOT TO TOUCH ^
 pygame.init()
 
 screen = display.set_mode((WIDTH, HEIGHT), depth=32, flags=RESIZABLE)
 clock = pygame.time.Clock()
 pygame.font.init()
 
-# Begin Connection to init GUI
+# Begin Connection to init GUI - due to instructions in Row 35
 client = Client()  ####
 client.start_connection(HOST, PORT)  ####
-'''Get elements from program to present them to the UI'''
+'''Get elements to present them to the UI'''
 pokemons = client.get_pokemons()  # get Pokemon Json ####
 pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d))  ####
 graph_json = client.get_graph()  # Per Scenario
 graph = json.loads(graph_json, object_hook=lambda json_dict: SimpleNamespace(**json_dict))  #####
 FONT = pygame.font.SysFont('Segoe UI Black', 20, bold=False)
-# load the json string into SimpleNamespace Object
 
-# Split pos (x,y)
 for n in graph.Nodes:
-    x, y, _ = n.pos.split(',')
-    n.pos = SimpleNamespace(x=float(x), y=float(y))
+    Model.SplitPos(n)
 
-# get data proportions
 # Small snippet - can stay at the View despite being Model related
 min_x = min(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 min_y = min(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
@@ -65,7 +59,7 @@ max_x = max(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 max_y = max(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
 
 
-# Scale with
+# Scale - Uses SCREEN hence GUI (View) Related by MVC StandPoint.
 
 def scale(data, min_screen, max_screen, min_data, max_data):
     """
@@ -74,8 +68,6 @@ def scale(data, min_screen, max_screen, min_data, max_data):
     """
     return ((data - min_data) / (max_data - min_data)) * (max_screen - min_screen) + min_screen
 
-
-# Scale - UI related
 
 def scalePokemon(pokemons):
     for p in pokemons:
@@ -91,8 +83,6 @@ def scaleAgents(agents):
             float(x), x=True), y=my_scale(float(y), y=True))
 
 
-# decorate scale with the correct values
-
 def my_scale(data, x=False, y=False):
     if x:
         return scale(data, 50, screen.get_width() - 50, min_x, max_x)
@@ -106,13 +96,13 @@ radius = 30
 
 # Add agent
 client.add_agent("{\"id\":0}")
-# client.add_agent("{\"id\":1}")
+client.add_agent("{\"id\":1}")
 # client.add_agent("{\"id\":2}")
 # client.add_agent("{\"id\":3}")
 
 # this command starts the server - the game is running now
 client.start()  ####
-client.log_in("313327579")  ###
+# client.log_in("313327579")  ###
 p = client.get_pokemons()  ###
 
 """
@@ -120,15 +110,13 @@ The code below should be improved significantly:
 The GUI and the "algo" are mixed - refactoring using MVC design pattern is required.
 """
 
-###**********GUI BEGINS**********
-
 while client.is_running() == 'true':
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
 
-    # Model Instance
+    # Model Instance - MVC related!
     model = Model(client)
 
     pokemons = model.loadPokemons()
@@ -145,7 +133,7 @@ while client.is_running() == 'true':
     screen.blit(bg, (0, 0))
 
     '''
-    Show the elements at the GUI
+    Show the elements at the GUI as print (if needed)
     '''
     #
     # getinfo = client.get_info()
@@ -179,12 +167,12 @@ while client.is_running() == 'true':
     # graph_message = jgraph
     # agents_message = jagents
 
+    # Model gets the information while GUI presents it
     Messages = Model.getInfo(client)
     MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID: ', 'Agents: ',
                        'Graph: ']
-
+    # Client is attached to GUI according to Amichai Kafka
     ttl = client.time_to_end()
-    # print(ttl)
 
     for i in range(0, 4):
         SMessage = FONT.render(str(MessagesHeaders[i]) + ": " + str(Messages[i]), True, (34, 139, 34))
@@ -196,7 +184,7 @@ while client.is_running() == 'true':
         screen.blit(SMessage, rect)
 
     SMessage = FONT.render("Time to end: " + str(client.time_to_end()), True, (34, 139, 34))
-    rect = pygame.Rect(880, 5 , 40, 40)
+    rect = pygame.Rect(880, 5, 40, 40)
     screen.blit(SMessage, rect)
 
     # Print each value
@@ -269,21 +257,20 @@ while client.is_running() == 'true':
     sqruitle = pygame.image.load("squirtle.jpg")
     upArrow = pygame.image.load("UP.png")
     downArrow = pygame.image.load("DOWN.png")
-
-
+    # Algo - REMOVE
     for p in pokemons:
         screen.blit(sqruitle, (int(p.pos.x), int(p.pos.y)))
         rect = pygame.Rect(int(p.pos.x) - 25, int(p.pos.y) - 25, 40, 40)
         jjj = FONT.render("Value: " + str(p.value), True, (0, 0, 255))
         screen.blit(jjj, rect)
         if (p.type > 0):
-            #UP
-            screen.blit(upArrow, ((int(p.pos.x)-22), (int(p.pos.y))+10))
+            # UP
+            screen.blit(upArrow, ((int(p.pos.x) - 22), (int(p.pos.y)) + 10))
         else:
-            #Down
-            screen.blit(downArrow, ((int(p.pos.x)-22), (int(p.pos.y))+10))
+            # Down
+            screen.blit(downArrow, ((int(p.pos.x) - 22), (int(p.pos.y)) + 10))
 
-        #Up or Down:
+        # Up or Down:
 
         print(p.type)
     # update screen changes

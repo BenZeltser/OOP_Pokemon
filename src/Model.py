@@ -6,6 +6,7 @@ import pygame
 from src.Button import Button
 
 
+
 class Model:
 
     def __init__(self, client):
@@ -22,7 +23,7 @@ class Model:
         agents = [agent.Agent for agent in agents]
         return agents
 
-    def SplitPos(self, n):
+    def SplitPos(n):
         x, y, _ = n.pos.split(',')
         n.pos = SimpleNamespace(x=float(x), y=float(y))  #####
 
@@ -74,3 +75,4 @@ class Model:
                     client.stop_connection()
                 else:
                     client.stop()
+
