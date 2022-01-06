@@ -111,11 +111,15 @@ class GraphAlgo(GraphAlgoInterface):
             result.clear()
         return result
 
-
-
-
-
-
+    '''returns the weight of the shortest path'''
+    def shortest_path_distance(self,s,d):
+        if s==d:
+            return 0
+        SP_list=self.shortest_path_list(s,d)
+        if not (SP_list):
+            return float('inf')
+        w= SP_list.pop(len(SP_list)-1).getTB()
+        return w
 
     '''returns a distance and a list of the shortest path'''
     def shortest_path(self, id1: int, id2: int) -> (float, list):
