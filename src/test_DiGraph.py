@@ -1,15 +1,19 @@
 from unittest import TestCase
 
-from pywin.Demos.cmdserver import Test
+from diGraph import DiGraph
 
-
-@Test
 
 class TestDiGraph(TestCase):
 
-    def test_v_size(self):
 
-        self.fail()
+    def preTest(self):
+        myGraph = DiGraph()
+        print("Test0")
+    def test_v_size(self):
+        myGraph = DiGraph()
+        n = myGraph.v_size()
+        self.assertEqual(n, 0, "Empty Graph")
+        print("Test1")
 
     def test_e_size(self):
         self.fail()
