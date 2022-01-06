@@ -169,22 +169,22 @@ while client.is_running() == 'true':
 
     # Model gets the information while GUI presents it
     Messages = Model.getInfo(client)
-    MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID: ', 'Agents: ',
+    MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID(Server)  ', 'Agents: ',
                        'Graph: ']
     # Client is attached to GUI according to Amichai Kafka
     ttl = client.time_to_end()
 
     for i in range(0, 4):
-        SMessage = FONT.render(str(MessagesHeaders[i]) + ": " + str(Messages[i]), True, (34, 139, 34))
+        SMessage = FONT.render(str(MessagesHeaders[i]) +str(Messages[i]), True, (34, 139, 34))
         rect = pygame.Rect(700, 5 + (i * 25), 40, 40)
         screen.blit(SMessage, rect)
     for i in range(5, 8):  # Shit X-Axis
         SMessage = FONT.render(str(MessagesHeaders[i]) + ": " + str(Messages[i]), True, (34, 139, 34))
-        rect = pygame.Rect(880, (i - 4) * 25, 40, 40)
+        rect = pygame.Rect(840, (i - 4) * 25, 40, 40)
         screen.blit(SMessage, rect)
 
-    SMessage = FONT.render("Time to end: " + str(client.time_to_end()), True, (34, 139, 34))
-    rect = pygame.Rect(880, 5, 40, 40)
+    SMessage = FONT.render("Time to end(ms): " + str(client.time_to_end()), True, (34, 139, 34))
+    rect = pygame.Rect(840, 5, 40, 40)
     screen.blit(SMessage, rect)
 
     # Print each value
