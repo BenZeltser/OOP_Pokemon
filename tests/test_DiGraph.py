@@ -30,26 +30,26 @@ class TestDiGraph(TestCase):
         self.assertEqual(e, 0, "Empty Graph")
         print("Test2")
 
-    def test_get_all_v(self):
-        self.fail()
-
-    def test_all_out_edges_of_node(self):
-        self.fail()
-
-    def test_all_in_edges_of_node(self):
-        self.fail()
 
     def test_add_edges(self):
-        self.fail()
+        myGraph = DiGraph.DiGraph()
+        myGraph.add_edge(1, 2, 6)
+        boolTest = False
+        for edge in myGraph.all_out_edges_of_node(1):
+            if edge == 2:
+                boolTest = True
+        self.assertTrue(boolTest)
+        print("Test3")
 
     def test_add_node(self):
-        self.fail()
-
-    def test_remove_edge(self):
-        self.fail()
-
-    def test_remove_node(self):
-        self.fail()
+        myGraph = DiGraph()
+        myGraph.add_node(1)
+        self.assertEqual(myGraph.v_size(), 1, "One Node Graph ")
+        print("Test4")
 
     def test_to_dictionary(self):
-        self.fail()
+        myGraph = DiGraph
+        c = myGraph.DiGraph.to_dictionary()
+        a:dict
+        self.assertEqual(a,c,"Empty Dict" )
+        print("Test5")
