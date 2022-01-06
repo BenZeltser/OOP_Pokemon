@@ -1,4 +1,6 @@
 import time
+from collections import deque
+
 import GraphInterface
 import json
 
@@ -58,6 +60,64 @@ class GraphAlgo(GraphAlgoInterface):
         except Exception as e:
             return False
 
+
+    '''returns a list of the shortest path'''
+    def shortest_path_list(self,s,d):
+        group_Vertices=self.myGraph.vertices
+        p={}
+        result=[]
+        tempD=d
+        if s==d:
+            result.append(group_Vertices.get(s))
+            return result
+        if s not in group_Vertices.keys() or d not in group_Vertices.keys():
+            return result
+        group_Vertices_Keys=group_Vertices.keys()
+        for k in  group_Vertices_Keys:
+            (group_Vertices.get(k).setTB(float('inf')))
+            group_Vertices.get(k).set_info("")
+            p[k]=None
+        (group_Vertices.get(s)).set_TB(0)
+        q= deque()
+        group_Vertices_Keys=group_Vertices.keys()
+        for k in group_Vertices_Keys:
+            q.append(group_Vertices.get(k))
+        min_Dist=float('inf')
+        min_id= -1
+        distance=0
+        min_vertice=None
+        while q:
+            for v in q:
+                if v.getTB()<= min_Dist:
+                    min_Dist=v.getTB()
+                    min_id=v.getId()
+                    min_vertice=v
+            q.remove(min_vertice)
+            if (self.myGraph.all_out_edges_of_node(min_id)):
+                for k in self.myGraph.all_out_edges_of_node(min_id).keys():
+                    neighbor_vertice=self.myGraph.vertices.get(k)
+                    if (neighbor_vertice in q):
+                        distance=min_Dist+self.myGraph.all_out_edges_of_node(min_id).get(k)
+                        if(distance<neighbor_vertice.get_TB()):
+                            (neighbor_vertice.set_info(str(min_id)))
+            min_Dist= float('inf')
+        tempD=d
+        while group_Vertices.get(tempD).getTB()!= 0 and group_Vertices.get(tempD).getInfo()!="":
+            result.append(group_Vertices.get(tempD))
+            tempD=int(group_Vertices.get(tempD).getInfo())
+        result.append(group_Vertices.get(s))
+        result.reverse()
+        if result[len(result)-1].getID()!=d:
+            result.clear()
+        return result
+
+
+
+
+
+
+
+    '''returns a distance and a list of the shortest path'''
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         v_List=self.shortest_path_list(id1,id2)
         vertices_keys=[]
