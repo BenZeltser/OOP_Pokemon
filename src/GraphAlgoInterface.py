@@ -52,24 +52,3 @@ class GraphAlgoInterface:
         """
         raise NotImplementedError
 
-    def TSP(self, node_lst: List[int]) -> (List[int], float):
-        """
-        Finds the shortest path that visits all the nodes in the list
-        :param node_lst: A list of nodes id's
-        :return: A list of the nodes id's in the path, and the overall distance
-        """
-
-    def centerPoint(self) -> (int, float):
-        """
-        Finds the node that has the shortest distance to it's farthest node.
-        :return: The nodes id, min-maximum distance
-        """
-
-    def plot_graph(self) -> None:
-        """
-        Plots the graph.
-        If the nodes have a position, the nodes will be placed there.
-        Otherwise, they will be placed in a random but elegant manner.
-        @return: None
-        """
-        raise NotImplementedError
