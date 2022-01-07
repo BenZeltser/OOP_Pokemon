@@ -51,6 +51,11 @@ The Project is Following The Model View Controller (MVC) design pattern
 
 ### We will Explain the different 'moving parts' of the program 
 
+![image](https://user-images.githubusercontent.com/92685838/148547653-e452f3c6-7717-4bfd-837c-8b1d2f69735b.png)
+
+- An Agent that will catch the Pokemons. On this case, the ID is 0
+
+
 ![image](https://user-images.githubusercontent.com/92685838/148546737-2bbec1ee-5117-4eba-92dc-6e040d73aae5.png)
 
 - A Node (Vertex) in the Graph, on this case with an ID of 9.
