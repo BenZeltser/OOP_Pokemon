@@ -44,7 +44,7 @@ HOST = '127.0.0.1'
     
     However, the MVC Design Pattern is respected by the separation below:
     -----------------------------------------------------------------------
-    -Model - Primarily handles Data and Algorithm logic
+    -Model - Primarily handles Data and Algorithm logic 
     -View - essentially the GUI
     -Controller - Handles the requests and user interaction (mostly main)
     -------------------------------------------------------------------------
