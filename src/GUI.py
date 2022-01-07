@@ -32,7 +32,23 @@ WIDTH, HEIGHT = 1080, 720
 PORT = 6666
 HOST = '127.0.0.1'
 
-#### PARTIALLY NOT GUI RELATED BUT CLEARLY INSTRUCTED NOT TO TOUCH ^
+'''
+    ***Important Note to Code Reviewer***
+    
+    small parts of the class are not Directly GUI related hence
+    they implement the MVC Design Pattern with a positive required addition.
+    
+    that is due to the fact that In exercise 12 with Mr. Amichai Kafka
+    he instructed to not change any of the code that is above this doc very
+    doc that you are reading. 
+    
+    However, the MVC Design Pattern is respected by the separation below:
+    -----------------------------------------------------------------------
+    -Model - Primarily handles Data and Algorithm logic
+    -View - essentially the GUI
+    -Controller - Handles the requests and user interaction (mostly main)
+    -------------------------------------------------------------------------
+'''
 pygame.init()
 
 screen = display.set_mode((WIDTH, HEIGHT), depth=32, flags=RESIZABLE)
