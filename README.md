@@ -23,8 +23,27 @@ Each Pokemon will have an assigned value, our goal is to allow the agent take th
 
 ## Project Structuce 🏗️
 
+
+
 on this segment, we will presenet the structuce of the project and how the different classes and server Intreact with each other.  
 
 the presentation will be used by a UML Diagram that will visually present the different moving parts in the program.
 
-\\\ADD UML\\\
+The Project is Following The Model View Controller (MVC) design pattern
+
+#### MVC: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+
+### MVC Visual Explanation: (Via Youtube) 
+
+![image](https://user-images.githubusercontent.com/92685838/148545815-4136edb9-f714-467b-ba1c-ce5f73ff1938.png)
+
+### UML Diagram:
+
+![image](https://user-images.githubusercontent.com/92685838/148545578-257c5092-1d9f-432d-8b0f-b8c276608187.png)
+
+## Performance 💻
+
+we tested different cases and brought an output conclusion. the copyable version is in the Page's Wiki: 
+https://github.com/BenZeltser/OOP_Pokemon/wiki
+
+
