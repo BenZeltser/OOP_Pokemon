@@ -33,7 +33,7 @@ PORT = 6666
 HOST = '127.0.0.1'
 
 '''
-    ***Important Note to Code Reviewer***
+    *** Important Note to Code Reviewer ***
     
     small parts of the class are not Directly GUI related hence
     they implement the MVC Design Pattern with a positive required addition.
