@@ -39,7 +39,7 @@ HOST = '127.0.0.1'
     they implement the MVC Design Pattern with a positive required addition.
     
     that is due to the fact that In exercise 12 with Mr. Amichai Kafka
-    he instructed to not change any of the code that is above this doc very
+    he instructed to not change any of the code that is above this very
     doc that you are reading. 
     
     However, the MVC Design Pattern is respected by the separation below:
@@ -64,6 +64,27 @@ pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d)) 
 graph_json = client.get_graph()  # Per Scenario
 graph = json.loads(graph_json, object_hook=lambda json_dict: SimpleNamespace(**json_dict))  #####
 FONT = pygame.font.SysFont('Segoe UI Black', 20, bold=False)
+#MODEL CLIENT
+c = client.get_agents()
+print("CLIENT AGENTS")
+print(c)
+client.add_agent("{\"id\":0}")
+client.add_agent("{\"id\":1}")
+client.add_agent("{\"id\":2}")
+client.add_agent("{\"id\":3}")
+
+# getinfo = client.get_info()
+# info = json.loads(getinfo)
+
+clients = client.get_agents()  # get Agents Json ####
+client_obj = json.loads(clients)
+print(client_obj['Agents'])
+print("\n\n\n#####################")
+print(client_obj['Agents'][0])
+print(client_obj['Agents'][0])
+print(client_obj['Agents'][0]['Agent']['id'])
+print(client_obj['Agents'][1]['Agent']['id'])
+                        # agent         attribute
 
 for n in graph.Nodes:
     Model.SplitPos(n)

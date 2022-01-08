@@ -76,3 +76,43 @@ class Model:
                 else:
                     client.stop()
 
+    def sendAgents(client):
+        """
+        returns: json str of agents. for example:\n
+        {
+            "Agents":[
+                {
+                    "Agent":
+                    {
+                        "id":0,
+                        "value":0.0,
+                        "src":0,
+                        "dest":1,
+                        "speed":1.0,
+                        "pos":"35.18753053591606,32.10378225882353,0.0"
+                    }
+                }
+            ]
+        }
+        """
+        clients = client.get_agents()  # get Agents Json ####
+        client_obj = json.loads(clients)
+        ans = {'id': client_obj['Agents'][0]['Agent']['id'],
+               'value': client_obj['Agents'][0]['Agent']['value'],
+               'src': client_obj['Agents'][0]['Agent']['src'],
+               'dest': client_obj['Agents'][0]['Agent']['dest'],
+               'speed': client_obj['Agents'][0]['Agent']['speed'],
+               'pos': client_obj['Agents'][0]['Agent']['pos']}
+        return ans
+
+    def sendPokemons(client):
+        pokemons = client.get_pokemons()  # get Agents Json ####
+        pokemon_obj = json.loads(pokemons)
+        ans = []
+        i = 0
+        for p in pokemons:
+            ans[i] = {'value': pokemon_obj['Pokemons'][i]['Pokemon']['value'],
+                   'type': pokemon_obj['Pokemons'][i]['Agent']['type'],
+                   'pos': pokemon_obj['Pokemons'][i]['Agent']['pos']}
+            i = i+1
+        return ans
