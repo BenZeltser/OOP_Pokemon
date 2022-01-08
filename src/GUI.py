@@ -78,12 +78,7 @@ client.add_agent("{\"id\":3}")
 
 clients = client.get_agents()  # get Agents Json ####
 client_obj = json.loads(clients)
-print(client_obj['Agents'])
-print("\n\n\n#####################")
-print(client_obj['Agents'][0])
-print(client_obj['Agents'][0])
-print(client_obj['Agents'][0]['Agent']['id'])
-print(client_obj['Agents'][1]['Agent']['id'])
+
                         # agent         attribute
 
 for n in graph.Nodes:
