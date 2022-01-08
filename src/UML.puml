@@ -1,0 +1,190 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+''' Declare Classes'''
+class Button
+class Digraph
+class Edge
+class GraphAlgo
+class GUI
+class main
+class Model
+class Vertices
+Interface GraphInterface
+Interface GraphAlgoInterface
+
+GraphAlgoInterface --> GraphAlgo
+GraphInterface --> Digraph
+main --> Client: get data
+main --> Digraph: init Graph
+main --> GUI: init GUI
+main --> Model: init GUI and Json related ops
+Model --> Digraph: send data to process
+Digraph --> GraphAlgo: apply algorithm on data
+GraphAlgo --> GUI: present the data to user
+GUI --> Button
+Digraph --> Vertices
+Digraph --> Edge
+Model --> GUI
+Model --> Button: control GUI related real time data
+'''Interact the classes'''
+
+Interface GraphAlgoInterface {
+    get_graph()
+    load_from_json()
+    save_to_json()
+    shortest_path()
+
+    }
+
+Interface GraphInterface {
+    v_size()
+    e_size()
+    get_all_v()
+    all_in_edges_of_node()
+    all_out_edges_of_node()
+    get_mc()
+    add_edge()
+    add_node()
+    remove_node()
+    remove_edge()
+
+    }
+
+
+class Button {
+    init(self)
+    image
+    rect
+    rect.topleft
+    clicked: bool
+
+    }
+class Digraph {
+    vertices
+    edges
+    modCounter
+    r_edges
+
+    init()
+    v_size()
+    e_size()
+    get_all_v()
+    all_out_edges_of_node()
+    all_in_edges_of_node()
+    get_mc()
+    add_edges()
+    add_node()
+    remove_edge()
+    remove_node()
+    to_dictionary()
+
+    }
+class Edge {
+    src
+    w (weight)
+    dest
+    init()
+    getSRC()
+    getDest()
+    getW()
+
+    }
+class GraphAlgo {
+    myGraph (Digraph)
+    TL_sort[]
+    SCC[]
+
+    init()
+    get_graph()
+    load_from_json()
+    save_to_json()
+    shortest_path_list()
+    shortest_path_distance()
+    shortest_path()
+    DoubleBFS()
+
+
+    }
+class GUI {
+    WIDTH
+    HEIGHT
+    PORT
+    HOST
+    screen
+    clock
+    client
+
+    scale()
+    scalePokemon()
+    scaleAgent()
+    my_scale()
+    Messages[]
+
+    }
+class main {
+
+
+    }
+class Model {
+    client
+    init()
+    loadPokemons()
+    loadAgents()
+    splitPos()
+    getInfo()
+    stopGUI() (stop Button action)
+
+    }
+class Vertices {
+    id=0
+    count=0
+    w=0.0 //Weight
+    inf="" //Infinity
+    t=0 //tmark
+    p=None
+    v="false" //vertcies_visited
+    TB=0.0
+    c=""
+    time=0
+    pos=() //Position
+
+    init()
+    repr()
+    set_id()
+    copy_vertices()
+    get_id()
+    get_weight()
+    set_weight()
+    get_info()
+    set_info()
+    get_tag()
+    set_tag()
+    get_TB()
+    set_TB()
+    set_dub() //VALUE
+    set_counter()
+
+    }
+class Client {
+    start_connection()
+    __send_message()
+    get_agents()
+    add_agent()
+    get_graph()
+    get_info()
+    get_pokemons()
+    is_running()
+    time_to_end()
+    start()
+    stop()
+    move()
+    choose_next_edge()
+    log_in()
+    stop_connection()
+
+
+    }
+
+
+@enduml
