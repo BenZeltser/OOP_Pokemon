@@ -1,0 +1,65 @@
+'''Graph Algo class implements GraphAlgoInterface'''
+
+class GraphAlgo(GraphAlgoInterface):    '''Constructor'''
+
+    def __init__(self, Digraph=myGraph):
+        '''New Graph'''
+        
+            '''Get'''
+
+    def get_graph(self) -> GraphInterface:
+        return self.myGraph
+
+    '''Load'''
+
+    def load_from_json(self, file_name: str) -> bool:
+    
+    
+    '''Save'''
+
+    def save_to_json(self, file_name: str) -> bool:
+    
+        '''returns a list of the shortest path'''
+
+    def shortest_path_list(self, s, d):
+    
+        '''returns the weight of the shortest path'''
+
+    def shortest_path_distance(self, s, d):
+    
+        '''returns a distance and a list of the shortest path'''
+
+    def shortest_path(self, id1: int, id2: int) -> (float, list):
+    
+        '''Idea inspired by PHD William Fiset.
+       Use the reverse Graph 
+       To find the Strongly Connected Component of a given node
+       
+       see:
+       
+       SCC: 
+       https://en.wikipedia.org/wiki/Strongly_connected_component
+       
+       Clique: 
+       https://en.wikipedia.org/wiki/Clique_(graph_theory)
+       
+       '''
+
+    def DoubleBFS(self, myGraph, id1: int, has_family: dict) -> list:
+
+        '''
+
+        :param myGraph:
+        :param id1:
+        :param has_family:
+        :return:
+
+        'Deques are a generalization of stacks and queues (the name is pronounced “deck” and is short for
+        “double-ended queue”). Deques support thread-safe, memory efficient appends and pops from either side of the
+        deque with approximately the same O(1) performance in either direction.
+
+        https://docs.python.org/3/library/collections.html
+
+        TL;DR - a 'mutant' of Stack and Queue combined
+
+        '''
