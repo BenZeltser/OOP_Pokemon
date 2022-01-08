@@ -4,7 +4,6 @@ class Edge:
 
 
     def __str__(self):
-        return ('src: '+str(self.src)+'\n'+'w'+str(self.w)+'\n'+' dest:'+str(self.dest))
 
     def getSRC(self):
     
