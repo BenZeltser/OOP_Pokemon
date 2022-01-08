@@ -1,3 +1,39 @@
-   ''' this is the class that represent Directed Weight Graph '''
+  
+  #User Generated
+  
+  #this is the class that represent Directed Weight Graph 
    def __init__(self):
-      ''' this is the Digraph contructor '''
+       #this is the Digraph contructor 
+
+       # this function returns the amount of vertices in a graph
+    def v_size(self) -> int:
+    
+        # this function retruns the amount of edges in a graph
+    def e_size(self) -> int:
+    
+        # this function returns a dictionary of all the vertices that are in a graph
+    def get_all_v(self) -> dict:
+    
+        # this function returns a dictionary of all the vertices connected from id1
+    def all_out_edges_of_node(self, id1: int) -> dict:
+    
+        # this function returns a dictionary of all the vertices connected to id1
+    def all_in_edges_of_node(self, id1: int) -> dict:
+    
+        # this function returns the mod Counter
+    def get_mc(self) -> int:
+    
+        # this functions add an edge to the graph if the edge does not exist
+    def add_edges(self, id1: int, id2: int, weight: float) -> bool:
+    
+        # this functions adds a vertice if it is not in the graph
+    def add_node(self, node_id: int, pos: tuple = None) -> bool:
+    
+    #this function removes an edge from the graph
+    def remove_edge(self, node_id1:int, node_id2: int)-> bool:
+    
+    #this function remove a vertices from the graph
+    def remove_node(self,node_id:int)-> bool:
+    
+        #this function makes our grapgh into dictionary so we could save it as a json
+    def to_dictionary(self)-> dict:
