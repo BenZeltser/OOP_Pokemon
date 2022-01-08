@@ -28,6 +28,30 @@ Each Pokemon will have an assigned value, our goal is to allow the agent take th
 
 on this segment, we will presenet the structuce of the project and how the different classes and server Intreact with each other.  
 
+### Behind the scenes information:
+ 
+The project is a client-side focused program that recives information from a server and retrives it's data as a Json string that that program would parse and process it's information. the Graph Object class is using a Python Dictionary to map with a one-one function between the key to it's value (e.g id to node, node to edge, etc)  
+
+the Program implements some Algorithms that has been studied through the Semester and applies them to create a high performance Poekmon Capture. Here is a list of some of the Key functions that were used: 
+
+##### - Graph elementary functions (add edge/node, get, set, init, size, etc)
+##### - Graph to dictionary: this function makes our grapgh into dictionary so we could save it as a json
+##### - GraphAlgo elementary functions (init, get, set)
+##### - Load from Json: parses and proccesses the json file to a Python Object with the information accordingly.
+##### - Save to Json: Essentialy the reverse of Load: Converts a Graph object to a Json file.
+##### - Shortest_path_list: returns a list of the shortest path
+##### - Shortest_path_distance: returns the weight of the shortest path
+##### - shortest_path: returns a distance and a list of the shortest path
+##### - DoubleBFS: traverses the Graph twice in a Breadth first search manner, once as the original graph, once as a transposed graph. will return the SCC of the Graph. alot of information is stacked on this specific function so we added sources for reference
+
+BFS: https://en.wikipedia.org/wiki/Breadth-first_search  
+
+Transpose Graph: https://en.wikipedia.org/wiki/Transpose_graph  
+
+Strongly connected component (SCC): https://en.wikipedia.org/wiki/Strongly_connected_component
+
+### General info on Project structuce:
+
 the presentation will be used by a UML Diagram that will visually present the different moving parts in the program.
 
 The Project is Following The Model View Controller (MVC) design pattern
@@ -85,5 +109,10 @@ The Project is Following The Model View Controller (MVC) design pattern
 
 we tested different cases and brought an output conclusion. the copyable version is in the Page's Wiki: 
 https://github.com/BenZeltser/OOP_Pokemon/wiki
+
+
+## Program Functions
+
+here we will elude a list of the main wirtten functions in the program and briefly introduce their purposes 
 
 
