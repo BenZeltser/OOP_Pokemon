@@ -1,0 +1,13 @@
+class Edge:
+
+    def __init__(self, src, w, dest):
+
+
+    def __str__(self):
+        return ('src: '+str(self.src)+'\n'+'w'+str(self.w)+'\n'+' dest:'+str(self.dest))
+
+    def getSRC(self):
+    
+    def getDest(self):
+    
+    def getWeight(self):
