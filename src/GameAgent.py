@@ -9,7 +9,7 @@ dest: where the agent is currently headed, stores -1 if the agent has no destena
 speed: the speed of the agent
 pos: where the agent is currntly positioned in the graph
 '''
-class GameAgent()
+class GameAgent():
     def __init__(self,id, value,src,dest,speed,pos):
         self.id=id
         self.value=value
@@ -17,6 +17,7 @@ class GameAgent()
         self.dest=dest
         self.speed=speed
         self.pos=pos
+        self.my_target=None
 
     def get_id(self):
         return self.id
@@ -32,4 +33,18 @@ class GameAgent()
 
     def get_pos(self):
         return self.pos
+
+    def set_target(self,pokemon):
+        self.my_target=pokemon
+
+    def get_target(self):
+        return self.my_target
+
+    def set_path(self,path):
+        self.my_path = path
+
+    def get_path(self):
+        return self.my_path
+
+
 
