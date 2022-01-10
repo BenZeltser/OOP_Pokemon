@@ -1,6 +1,6 @@
 import json
 from types import SimpleNamespace
-
+from src import GamePokemon
 import pygame
 
 from src.Button import Button
@@ -116,3 +116,16 @@ class Model:
                    'pos': pokemon_obj['Pokemons'][i]['Agent']['pos']}
             i = i+1
         return ans
+
+    def Json2List(client):
+        ans = []
+        xrPokemons = client.get_pokemons()
+        d = json.loads(xrPokemons)
+
+        #Add all pokemons to list
+        for pokemon in d["Pokemons"]:
+            value = pokemon['Pokemon']['value']
+            type = pokemon['Pokemon']['type']
+            pos = pokemon['Pokemon']['pos']
+
+            current = GamePokemon(value,type,pos)
