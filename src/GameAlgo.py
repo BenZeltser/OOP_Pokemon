@@ -3,6 +3,7 @@ from src import client
 from src import GraphAlgoInterface
 from src import GameAgent
 from src import GamePokemon
+from src import GraphInterface
 
 
 class GameAlgo():
@@ -48,10 +49,12 @@ class GameAlgo():
             temp = algo.shortest_path(agent_List[i].get_src(), pokemon_List[target_index].get_src)
             agent_List[i].set_path(temp[1])
             agent_List[i].set_target(pokemon_List[target_index])
-        for i in range (len(agent_List)):
-            if len(agent_List[i].get_path())==1:
-                dict = {"agent_id": agent_List[i].get_id(), "next_node_id": agent_List[i].get_target().get_dest()}
-                client.choose_next_edge(json.dump(dict))
+        for i in range(len(agent_List)):
+            if len(agent_List[i].get_path()) == 1:
+                id = str(agent_List[i].get_id())
+                dest = str(agent_List[i].get_target().get_dest())
+                string = '{"agent_id":' + id + ', "next_node_id":' + dest + '}'
+                client.choose_next_edge(string)
             else:
                 id = str(agent_List[i].get_id())
                 dest = str(agent_List[i].get_path()[0].get_key())
