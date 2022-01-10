@@ -2,9 +2,9 @@ import json
 from types import SimpleNamespace
 from src import GamePokemon
 import pygame
-
+from src import GameAgent
 from src.Button import Button
-
+from src import GeoLocation
 
 
 class Model:
@@ -129,3 +129,39 @@ class Model:
             pos = pokemon['Pokemon']['pos']
 
             current = GamePokemon(value,type,pos)
+
+    def buildAgents(self, agents):
+        agnetList = []
+        for agent in agents:
+            '''New Agent'''
+            id = agent.id
+            value = agent.value
+            src = agent.src
+            dest = agent.dest
+            speed = agent.speed
+            pos = agent.pos
+
+            coordinates = pos.split(',')
+            location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
+            #Agent instance
+
+            current = GameAgent.GameAgent(id,value,src,dest,speed,location)
+            agnetList.append(current)
+        return agnetList
+
+    def buildPokemons(pokemons):
+        pokemonList = []
+        for pokemon in pokemons:
+            '''New pokemnon'''
+            value = pokemon.value
+            ttype = pokemon.type
+            pos = pokemon.pos
+
+            coordinates = pos.split(',')
+            location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
+            #Agent instance
+
+            current = GamePokemon.gamePokemon(value,ttype,location)
+            pokemonList.append(current)
+        return pokemonList
+

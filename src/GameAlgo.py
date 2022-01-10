@@ -23,14 +23,15 @@ class GameAlgo():
         for i in range(len(agent_List)):
             agent_List[i].set_target(pokemon_List[i])
 
-    def arrange_pokemons(self, pokemon_List):
+    def arrange_pokemons(pokemon_List):
         new_pokemon_list = []
         max_value = pokemon_List[0].get_value()
+        print(max_value)
         max_index = 0
         for i in range(len(pokemon_List)):
             for j in range(len(pokemon_List)):
-                if pokemon_List[j].get_value > max_value:
-                    max_value = pokemon_List[j].get_value
+                if pokemon_List[j].get_value() > max_value:
+                    max_value = pokemon_List[j].get_value()
                     max_index = j
             new_pokemon_list.append(pokemon_List[max_index])
             pokemon_List.pop(max_index)
