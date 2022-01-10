@@ -10,7 +10,7 @@ class DiGraph(GraphInterface):
     global modCounter
     global r_edges
 
-    # this is the Digraph contructor
+    # this is the Digraph constructor
     def __init__(self):
         self.vertices = {}
         self.edges = {}

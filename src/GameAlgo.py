@@ -4,12 +4,14 @@ from src import GraphAlgoInterface
 from src import GameAgent
 from src import GamePokemon
 from src import GraphInterface
+from src import GeoLocation
+from src.Edge import Edge
 
 
 class GameAlgo():
-    '''
-            '{"agent_id":0, "next_node_id":1}'.
-    '''
+    EPS1 = 0.001
+    EPS2 = EPS1 * EPS1
+    EPS = EPS2
 
     '''this function checks if each agent cought at least 1 pokemon'''
 
@@ -67,6 +69,26 @@ class GameAlgo():
             if agent_List[i].get_dest != -1:
                 return False
         return True
+
+    def update_pokemon_edge(self,pokemon,graph):
+        node_dict=graph.get_all_v()
+        for i in node_dict.keys():
+            edge_dict=graph.all_out_edges_of_node(node_dict.get(i).get_id)
+            for j in edge_dict.keys():
+                if (node_dict.get(i).get_id<edge_dict.get(j).get_id() and pokemon.get_type>0) or (node_dict.get(i).get_id>edge_dict.get(j).get_id() and pokemon.get_type<0):
+                    src_pos=node_dict.get(i).pos
+                    dest_pos=edge_dict.get(j).pos
+                    src_geoLoc=GeoLocation.__init__(src_pos[0],src_pos[1],src_pos[2])
+                    dest_geoLoc=GeoLocation.__init__(dest_pos[0],dest_pos[1],dest_pos[2])
+                    total_distance=src_geoLoc.distance(dest_geoLoc)
+                    distance1=src_geoLoc.distance(pokemon.get_pos())
+                    distance2=pokemon.get_pos().distance(dest_geoLoc)
+                    if total_distance> ((distance1+distance2)-self.EPS):
+                        edge_added=Edge.__init__(node_dict.get(i).get_id,edge_dict.get(j).get_weight(),edge_dict.get(j).get_id())
+                        pokemon.set_edge(edge_added)
+                        return
+
+
 
 
 
