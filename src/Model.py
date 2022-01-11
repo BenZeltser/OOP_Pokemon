@@ -130,26 +130,29 @@ class Model:
 
             current = GamePokemon(value,type,pos)
 
-    def buildAgents(self, agents):
-        agnetList = []
-        for agent in agents:
-            '''New Agent'''
-            id = agent.id
-            value = agent.value
-            src = agent.src
-            dest = agent.dest
-            speed = agent.speed
-            pos = agent.pos
-
+    def buildAgents(client):
+        agentList = []
+        agents=client.get_agents()
+        ans = json.loads(agents)
+        for i in ans.get("Agents"):
+            ''' create a new agent istance '''
+            tempDict=i.get("Agent")
+            id = tempDict.get("id")
+            value = tempDict.get("value")
+            src = tempDict.get("src")
+            dest = tempDict.get("dest")
+            speed = tempDict.get("speed")
+            pos = tempDict.get("pos")
+            ''' update coordinates to geolocation forma'''
             coordinates = pos.split(',')
             location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
             #Agent instance
 
             current = GameAgent.GameAgent(id,value,src,dest,speed,location)
-            agnetList.append(current)
-        return agnetList
+            agentList.append(current)
+        return agentList
 
-    def buildPokemons(pokemons):
+    def buildPokemons(client):
         pokemonList = []
         pokemons=client.get_pokemons()
         ans = json.loads(pokemons)
