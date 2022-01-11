@@ -25,7 +25,7 @@ class GameAlgo():
 
     def arrange_pokemons(pokemon_List):
         new_pokemon_list = []
-        max_value = pokemon_List[0].get_value()
+        max_value = 0
         print(max_value)
         max_index = 0
         for i in range(len(pokemon_List)):
@@ -35,8 +35,9 @@ class GameAlgo():
                     max_index = j
             new_pokemon_list.append(pokemon_List[max_index])
             pokemon_List.pop(max_index)
-            max_value = pokemon_List[0].get_value()
-        return new_pokemon_list
+            max_value = 0
+        pokemon_List=new_pokemon_list
+        return pokemon_List
 
     def catch_pokemons(self, pokemon_List, agent_List, algo):
         for i in range(len(agent_List)):
