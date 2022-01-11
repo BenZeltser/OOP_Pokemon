@@ -111,9 +111,9 @@ class Model:
         ans = []
         i = 0
         for p in pokemons:
-            ans[i] = {'value': pokemon_obj['Pokemons'][i]['Pokemon']['value'],
-                   'type': pokemon_obj['Pokemons'][i]['Agent']['type'],
-                   'pos': pokemon_obj['Pokemons'][i]['Agent']['pos']}
+            ans[i] = {'value': pokemon_obj['Pokemons'][0]['Pokemon']['value'],
+                   'type': pokemon_obj['Pokemons'][0]['Pokemon']['type'],
+                   'pos': pokemon_obj['Pokemons'][0]['Pokemon']['pos']}
             i = i+1
         return ans
 
@@ -151,11 +151,13 @@ class Model:
 
     def buildPokemons(pokemons):
         pokemonList = []
-        for pokemon in pokemons:
-            '''New pokemnon'''
-            value = pokemon.value
-            ttype = pokemon.type
-            pos = pokemon.pos
+        pokemons=client.get_pokemons()
+        ans = json.loads(pokemons)
+        for i in ans["Pokemons"]:
+            tempDict=i.get("Pokemon")
+            value = tempDict.get('value')
+            ttype = tempDict.get('type')
+            pos = tempDict.get('pos')
 
             coordinates = pos.split(',')
             location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
@@ -164,4 +166,10 @@ class Model:
             current = GamePokemon.gamePokemon(value,ttype,location)
             pokemonList.append(current)
         return pokemonList
+
+    def placeAgents(client, agentList ,pokemonList):
+        for i in range(len(agentList)):
+            client.add_agent("{\"id\":"+pokemonList[i].get_src()+"}")
+        for i in range(len(agentList)):
+            agentList[i].set_target(pokemonList[i])
 

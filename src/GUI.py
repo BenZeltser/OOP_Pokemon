@@ -101,6 +101,8 @@ for edge in graph.Edges:
     myGraph.add_edges(edge.src,edge.dest,edge.w)
     pass
 
+
+
 # Small snippet - can stay at the View despite being Model related
 min_x = min(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
 min_y = min(list(graph.Nodes), key=lambda n: n.pos.y).pos.y  ###
@@ -151,6 +153,35 @@ client.add_agent("{\"id\":1}")
 
 # this command starts the server - the game is running now
 client.start()  ####
+model = Model(client)
+
+pp = json.loads(pokemons)
+pokemonList = Model.buildPokemons(client)
+
+agentList= Model.buildAgents(client)
+
+
+#model.placeAgents(client, agentList, pokemonList)
+for i in range(len(agentList)):
+    client.add_agent("{\"id\":" + pokemonList[i].get_src() + "}")
+for i in range(len(agentList)):
+    agentList[i].set_target(pokemonList[i])
+captured: bool = False
+
+
+
+
+# call Model for algo
+
+pokelist = Model.buildPokemons(pokemons)
+GameAlgo.arrange_pokemons(pokelist)
+
+
+
+# scale pokemons, agents
+
+scalePokemon(pokemons)
+scaleAgents(agents)
 # client.log_in("313327579")  ###
 p = client.get_pokemons()  ###
 
@@ -159,24 +190,14 @@ The code below should be improved significantly:
 The GUI and the "algo" are mixed - refactoring using MVC design pattern is required.
 """
 
-while client.is_running() == 'true':
+while client.is_running() == 'true' and captured == False:
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
 
     # Model Instance - MVC related!
-    model = Model(client)
-
-    pokemons = model.loadPokemons()
-    agents = model.loadAgents()
-
-    #call Model for algo
-
-    pokelist = Model.buildPokemons(pokemons)
-    GameAlgo.arrange_pokemons(pokelist)
-
-    # scale pokemons, agents
 
     scalePokemon(pokemons)
     scaleAgents(agents)

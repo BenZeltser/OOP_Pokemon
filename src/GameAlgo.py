@@ -71,7 +71,7 @@ class GameAlgo():
             if agent_List[i].get_dest != -1:
                 return False
         return True
-
+    #update edge of the pokemon
     def update_pokemon_edge(self,pokemon,graph):
         node_dict=graph.get_all_v()
         for i in node_dict.keys():
