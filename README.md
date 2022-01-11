@@ -102,17 +102,3 @@ The Project is Following The Model View Controller (MVC) design pattern
 
 
 
-
-
-
-## Performance 💻
-
-we tested different cases and brought an output conclusion. the copyable version is in the Page's Wiki: 
-https://github.com/BenZeltser/OOP_Pokemon/wiki
-
-
-## Program Functions
-
-here we will elude a list of the main wirtten functions in the program and briefly introduce their purposes 
-
-
