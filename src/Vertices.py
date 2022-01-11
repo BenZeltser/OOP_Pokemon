@@ -52,7 +52,6 @@ class Vertices:
 #get the info of a vertice
     def get_info(self):
         return self.inf
-
 #set the info of a vertice
     def set_info(self,i):
         self.inf=i

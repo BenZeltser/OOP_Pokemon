@@ -3,10 +3,6 @@
 OOP - Ex4
 Very simple GUI example for python client to communicates with the server and "play the game!"
 """
-from src import DiGraph
-from src import Vertices
-from src.Edge import Edge
-from src.GameAlgo import GameAlgo
 
 '''
 
@@ -68,7 +64,7 @@ pokemons_obj = json.loads(pokemons, object_hook=lambda d: SimpleNamespace(**d)) 
 graph_json = client.get_graph()  # Per Scenario
 graph = json.loads(graph_json, object_hook=lambda json_dict: SimpleNamespace(**json_dict))  #####
 FONT = pygame.font.SysFont('Segoe UI Black', 20, bold=False)
-# MODEL CLIENT
+#MODEL CLIENT
 c = client.get_agents()
 print("CLIENT AGENTS")
 print(c)
@@ -77,31 +73,16 @@ client.add_agent("{\"id\":1}")
 client.add_agent("{\"id\":2}")
 client.add_agent("{\"id\":3}")
 
-
-# Get Graph from Model
-
-myGraph = DiGraph.DiGraph()
-
 # getinfo = client.get_info()
 # info = json.loads(getinfo)
 
 clients = client.get_agents()  # get Agents Json ####
 client_obj = json.loads(clients)
 
-# agent         attribute
+                        # agent         attribute
 
-# call method to add nodes to graph, to prepare drawing them on GUI
 for n in graph.Nodes:
-    myGraph.add_node(n.id,n.pos)
     Model.SplitPos(n)
-    # create Node instance
-
-# call method to add nodes to graph, to prepare drawing them on GUI
-for edge in graph.Edges:
-    myGraph.add_edges(edge.src,edge.dest,edge.w)
-    pass
-
-
 
 # Small snippet - can stay at the View despite being Model related
 min_x = min(list(graph.Nodes), key=lambda n: n.pos.x).pos.x  ###
@@ -153,35 +134,6 @@ client.add_agent("{\"id\":1}")
 
 # this command starts the server - the game is running now
 client.start()  ####
-model = Model(client)
-
-pp = json.loads(pokemons)
-pokemonList = Model.buildPokemons(client)
-
-agentList= Model.buildAgents(client)
-
-
-#model.placeAgents(client, agentList, pokemonList)
-for i in range(len(agentList)):
-    client.add_agent("{\"id\":" + pokemonList[i].get_src() + "}")
-for i in range(len(agentList)):
-    agentList[i].set_target(pokemonList[i])
-captured: bool = False
-
-
-
-
-# call Model for algo
-
-pokelist = Model.buildPokemons(pokemons)
-GameAlgo.arrange_pokemons(pokelist)
-
-
-
-# scale pokemons, agents
-
-scalePokemon(pokemons)
-scaleAgents(agents)
 # client.log_in("313327579")  ###
 p = client.get_pokemons()  ###
 
@@ -190,14 +142,19 @@ The code below should be improved significantly:
 The GUI and the "algo" are mixed - refactoring using MVC design pattern is required.
 """
 
-while client.is_running() == 'true' and captured == False:
-
+while client.is_running() == 'true':
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit(0)
 
     # Model Instance - MVC related!
+    model = Model(client)
+
+    pokemons = model.loadPokemons()
+    agents = model.loadAgents()
+
+    # scale pokemons, agents
 
     scalePokemon(pokemons)
     scaleAgents(agents)
@@ -244,14 +201,13 @@ while client.is_running() == 'true' and captured == False:
 
     # Model gets the information while GUI presents it
     Messages = Model.getInfo(client)
-    MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID(Server)  ',
-                       'Agents: ',
+    MessagesHeaders = ['Pokemons: ', 'isLogged: ', 'Moves: ', 'Grade: ', 'Level: ', 'MaxLevel: ', 'ID(Server)  ', 'Agents: ',
                        'Graph: ']
     # Client is attached to GUI according to Amichai Kafka
     ttl = client.time_to_end()
 
     for i in range(0, 4):
-        SMessage = FONT.render(str(MessagesHeaders[i]) + str(Messages[i]), True, (34, 139, 34))
+        SMessage = FONT.render(str(MessagesHeaders[i]) +str(Messages[i]), True, (34, 139, 34))
         rect = pygame.Rect(700, 5 + (i * 25), 40, 40)
         screen.blit(SMessage, rect)
     for i in range(5, 8):  # Shit X-Axis
@@ -359,26 +315,14 @@ while client.is_running() == 'true' and captured == False:
     # ALGO PART
 
     for agent in agents:
-        agnetList = []
-        id = agent.id
-        value = agent.value
-        src = agent.src
-        dest = agent.dest
-        speed = agent.speed
-        pos = agent.pos
         if agent.dest == -1:
             next_node = (agent.src - 1) % len(graph.Nodes)
             client.choose_next_edge(
                 '{"agent_id":' + str(agent.id) + ', "next_node_id":' + str(next_node) + '}')
-
             ttl = client.time_to_end()
 
             # print(ttl, client.get_info())
 
     client.move()
-
-    '''
-        Algo Call
-    '''
 
 # game over

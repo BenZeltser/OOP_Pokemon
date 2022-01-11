@@ -1,10 +1,10 @@
 import json
 from types import SimpleNamespace
-from src import GamePokemon
+
 import pygame
-from src import GameAgent
+
 from src.Button import Button
-from src import GeoLocation
+
 
 
 class Model:
@@ -111,68 +111,8 @@ class Model:
         ans = []
         i = 0
         for p in pokemons:
-            ans[i] = {'value': pokemon_obj['Pokemons'][0]['Pokemon']['value'],
-                   'type': pokemon_obj['Pokemons'][0]['Pokemon']['type'],
-                   'pos': pokemon_obj['Pokemons'][0]['Pokemon']['pos']}
+            ans[i] = {'value': pokemon_obj['Pokemons'][i]['Pokemon']['value'],
+                   'type': pokemon_obj['Pokemons'][i]['Agent']['type'],
+                   'pos': pokemon_obj['Pokemons'][i]['Agent']['pos']}
             i = i+1
         return ans
-
-    def Json2List(client):
-        ans = []
-        xrPokemons = client.get_pokemons()
-        d = json.loads(xrPokemons)
-
-        #Add all pokemons to list
-        for pokemon in d["Pokemons"]:
-            value = pokemon['Pokemon']['value']
-            type = pokemon['Pokemon']['type']
-            pos = pokemon['Pokemon']['pos']
-
-            current = GamePokemon(value,type,pos)
-
-    def buildAgents(client):
-        agentList = []
-        agents=client.get_agents()
-        ans = json.loads(agents)
-        for i in ans.get("Agents"):
-            ''' create a new agent istance '''
-            tempDict=i.get("Agent")
-            id = tempDict.get("id")
-            value = tempDict.get("value")
-            src = tempDict.get("src")
-            dest = tempDict.get("dest")
-            speed = tempDict.get("speed")
-            pos = tempDict.get("pos")
-            ''' update coordinates to geolocation forma'''
-            coordinates = pos.split(',')
-            location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
-            #Agent instance
-
-            current = GameAgent.GameAgent(id,value,src,dest,speed,location)
-            agentList.append(current)
-        return agentList
-
-    def buildPokemons(client):
-        pokemonList = []
-        pokemons=client.get_pokemons()
-        ans = json.loads(pokemons)
-        for i in ans["Pokemons"]:
-            tempDict=i.get("Pokemon")
-            value = tempDict.get('value')
-            ttype = tempDict.get('type')
-            pos = tempDict.get('pos')
-
-            coordinates = pos.split(',')
-            location = GeoLocation.GeoLocation(coordinates[0],coordinates[1],coordinates[2])
-            #Agent instance
-
-            current = GamePokemon.gamePokemon(value,ttype,location)
-            pokemonList.append(current)
-        return pokemonList
-
-    def placeAgents(client, agentList ,pokemonList):
-        for i in range(len(agentList)):
-            client.add_agent("{\"id\":"+pokemonList[i].get_src()+"}")
-        for i in range(len(agentList)):
-            agentList[i].set_target(pokemonList[i])
-

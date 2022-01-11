@@ -1,4 +1,4 @@
-from src import Edge
+
 
 
 class gamePokemon():
@@ -19,9 +19,6 @@ class gamePokemon():
 
     def set_edge(self,edge):
         self.edge=edge
-
-    def get_edge(self):
-        return self.edge
 
     def get_src(self):
         return self.edge.src
